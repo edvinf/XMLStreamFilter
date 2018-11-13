@@ -103,7 +103,7 @@ public class ContentEchoer extends DefaultHandler {
         if ("".equals(eName)) {
             eName = qName; // not namespaceAware
         }
-        emit("<" + eName + ">");
+        emit("</" + eName + ">");
     }
 
     public void characters(char buf[], int offset, int len)
