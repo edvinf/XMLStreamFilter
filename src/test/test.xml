@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<missions xmlns="http://www.imr.no/formats/nmdbiotic/v1.4">
+    <mission missiontype="2" year="2015" platform="0000" missionnumber="2" missiontypename="missiontypename" callsignal="CALL" platformname="platformanme">
+        <startdate>20/04/2015</startdate>
+        <stopdate>27/05/2015</stopdate>
+        <purpose></purpose>
+        <fishstation serialno="99999">
+            <nation>58</nation>
+            <platform>0000</platform>
+            <station>15</station>
+            <startdate>27/04/2015</startdate>
+            <starttime>09:44:00</starttime>
+            <stopdate>27/04/2015</stopdate>
+            <stoptime>11:17:00</stoptime>
+            <latitudestart>64.67583333333333</latitudestart>
+            <longitudestart>9.675833333333333</longitudestart>
+            <system>2</system>
+            <area>6</area>
+            <location>11</location>
+            <fishingdepthmax>160.0</fishingdepthmax>
+            <fishingdepthmin>115.0</fishingdepthmin>
+            <gear>3128</gear>
+            <gearcount>1</gearcount>
+            <gearcondition>1</gearcondition>
+            <trawlquality>8</trawlquality>
+            <catchsample species="164712" samplenumber="1" noname="torsk" aphia="126436">
+                <group>20</group>
+                <conservation>1</conservation>
+                <producttype>1</producttype>
+                <weight>68.0</weight>
+            </catchsample>
+            <catchsample species="164727" samplenumber="1" noname="sei" aphia="126441">
+                <group>20</group>
+                <conservation>1</conservation>
+                <producttype>1</producttype>
+                <weight>185.0</weight>
+            </catchsample>
+            <catchsample species="164728" samplenumber="1" noname="lyr" aphia="126440">
+                <group>20</group>
+                <conservation>1</conservation>
+                <producttype>1</producttype>
+                <weight>410.0</weight>
+            </catchsample>
+            <catchsample species="164744" samplenumber="1" noname="hyse" aphia="126437">
+                <group>20</group>
+                <conservation>1</conservation>
+                <producttype>1</producttype>
+                <weight>31.0</weight>
+            </catchsample>
+        </fishstation>
+    </mission>
+</missions>
