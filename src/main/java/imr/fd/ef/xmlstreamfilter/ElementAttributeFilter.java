@@ -23,7 +23,7 @@ public class ElementAttributeFilter extends XMLFilterImpl {
     protected boolean reading;
     protected boolean echoComments;
     protected boolean foundonce;
-    protected boolean elementfinished;
+    protected boolean inElement;
     protected String element;
     protected String attribute;
     protected Set<String> retainvalues;
@@ -35,37 +35,44 @@ public class ElementAttributeFilter extends XMLFilterImpl {
         this.reading = true;
         this.echoComments = echocomments;
         this.foundonce = false;
-        this.elementfinished = true;
+        this.inElement = false;
     }
 
     @Override
     public void endElement(String uri, String localName, String qName)
             throws SAXException {
-        if (this.elementfinished) {
+        if (!this.inElement) {
             super.endElement(uri, localName, qName);
-        } else if (qName.equals(this.element)) {
-            this.elementfinished = true; //delay turning on reading until next element is read to avoid whitespace output
+        } 
+        else if(this.inElement && this.reading){
+            super.endElement(uri, localName, qName);
+        } 
+        
+        if (this.inElement && qName.equals(this.element)) {
+            this.inElement = false;
         }
     }
 
     @Override
     public void startElement(String uri, String localName, String qName,
             Attributes atts) throws SAXException {
-
-        if (this.elementfinished){
-            this.reading=true;
-        }
         
-        //turns reading_line off for this seddellinje if it is not in species_codes_retained
-        if (this.reading && qName.equals(this.element)) {
+        if (this.inElement && !this.reading){
+            return;
+        }
+
+        if (!this.inElement && qName.equals(this.element)){
+            this.inElement = true;
             this.foundonce = true;
             if (!(atts.getValue(this.attribute) != null && this.retainvalues.contains(atts.getValue(this.attribute)))) {
                 this.reading = false;
-                this.elementfinished = false;
                 if (this.echoComments) {
                     String chars = "<!-- Element " + qName + " filtered -->";
                     super.characters(chars.toCharArray(), 0, chars.length());
                 }
+            }
+            else{
+                this.reading = true;
             }
         }
 

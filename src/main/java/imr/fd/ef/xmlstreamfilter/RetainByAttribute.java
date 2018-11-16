@@ -5,6 +5,8 @@
  */
 package imr.fd.ef.xmlstreamfilter;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedWriter;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -48,16 +50,19 @@ public class RetainByAttribute {
         SAXParser sp = spf.newSAXParser();
         XMLReader xr = sp.getXMLReader();
         eafilter.setParent(xr);
-        eafilter.setContentHandler(new ContentEchoer(new OutputStreamWriter(System.out)));
+        BufferedWriter bf = new BufferedWriter(new OutputStreamWriter(System.out));
+        eafilter.setContentHandler(new ContentEchoer(bf));
         
         //Set handler to xml writer ?
-        InputStream stream = new FileInputStream(infile);
+        InputStream stream = new BufferedInputStream(new FileInputStream(infile));
         eafilter.parse(new InputSource(stream));
         
         if (!eafilter.found()){
             System.err.println("Element:" + element + " not find in file.");
             System.exit(1);
         }
+        bf.flush();
+        stream.close();
     }
     
 }
