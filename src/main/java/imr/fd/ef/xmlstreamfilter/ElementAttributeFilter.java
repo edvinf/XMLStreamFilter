@@ -23,7 +23,7 @@ public class ElementAttributeFilter extends XMLFilterImpl {
     protected boolean reading;
     protected boolean echoComments;
     protected boolean foundonce;
-    protected boolean inElement;
+    protected int depth;
     protected String element;
     protected String attribute;
     protected Set<String> retainvalues;
@@ -32,24 +32,19 @@ public class ElementAttributeFilter extends XMLFilterImpl {
         this.element = element;
         this.attribute = attribute;
         this.retainvalues = retainvalues;
-        this.reading = true;
         this.echoComments = echocomments;
         this.foundonce = false;
-        this.inElement = false;
+        this.depth = 0;
     }
 
     @Override
     public void endElement(String uri, String localName, String qName)
             throws SAXException {
-        if (!this.inElement) {
+        if (this.depth==0) {
             super.endElement(uri, localName, qName);
         } 
-        else if(this.inElement && this.reading){
-            super.endElement(uri, localName, qName);
-        } 
-        
-        if (this.inElement && qName.equals(this.element)) {
-            this.inElement = false;
+        if (this.depth>0 && qName.equals(this.element)) {
+            this.depth--;
         }
     }
 
@@ -57,40 +52,32 @@ public class ElementAttributeFilter extends XMLFilterImpl {
     public void startElement(String uri, String localName, String qName,
             Attributes atts) throws SAXException {
         
-        if (this.inElement && !this.reading){
-            return;
-        }
-
-        if (!this.inElement && qName.equals(this.element)){
-            this.inElement = true;
+        if (this.depth==0 && qName.equals(this.element)){
             this.foundonce = true;
             if (!(atts.getValue(this.attribute) != null && this.retainvalues.contains(atts.getValue(this.attribute)))) {
-                this.reading = false;
+                this.depth++;
                 if (this.echoComments) {
                     String chars = "<!-- Element " + qName + " filtered -->";
                     super.characters(chars.toCharArray(), 0, chars.length());
                 }
             }
-            else{
-                this.reading = true;
-            }
         }
 
-        if (this.reading) {
+        if (this.depth==0) {
             super.startElement(uri, localName, qName, atts);
         }
     }
 
     @Override
     public void characters(char[] ch, int start, int length) throws SAXException {
-        if (this.reading) {
+        if (this.depth==0) {
             super.characters(ch, start, length);
         }
     }
 
     @Override
     public void ignorableWhitespace(char[] ch, int start, int length) throws SAXException {
-        if (this.reading) {
+        if (this.depth==0) {
             super.ignorableWhitespace(ch, start, length);
         }
     }

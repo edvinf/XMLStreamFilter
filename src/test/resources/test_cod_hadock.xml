@@ -29,6 +29,8 @@
                 <producttype>1</producttype>
                 <weight>68.0</weight>
             </catchsample>
+            
+            
             <catchsample species="164744" samplenumber="1" noname="hyse" aphia="126437">
                 <group>20</group>
                 <conservation>1</conservation>

@@ -19,6 +19,7 @@
                     <descriptorRefs>
                         <descriptorRef>jar-with-dependencies</descriptorRef>
                     </descriptorRefs>
+                    <finalName>xml_attr_filtert</finalName>
                     <archive>
                         <manifest>
                             <mainClass>imr.fd.ef.xmlstreamfilter.RetainByAttribute</mainClass>

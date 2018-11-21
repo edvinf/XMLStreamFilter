@@ -29,10 +29,10 @@ public class RetainByAttribute {
     
     public static void main(String[] args) throws ParserConfigurationException, SAXException, FileNotFoundException, IOException{
         if (args.length<3){
-            System.out.print("Filters xml based on attribute values.");
-            System.out.print("All elements above the given element is kept.");
-            System.out.print("The given element and its subtree is kept if the given attribute exists and equals any of the retained values.");
-            System.out.print("Usage: <infile> <element> <attribute> [retained values]");
+            System.out.println("Filters xml based on attribute values.");
+            System.out.println("All elements above the given element is kept.");
+            System.out.println("The given element and its subtree is kept if the given attribute exists and equals any of the retained values.");
+            System.out.println("Usage: <infile> <element> <attribute> [retained values]");
             System.exit(1);
         }
         String infile = args[0];
